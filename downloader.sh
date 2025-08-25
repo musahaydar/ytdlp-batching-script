@@ -22,7 +22,7 @@ done
 for line in $(cat "$filename")
 do
   if [ "$rename" = true ] ; then
-    output=$( cat /dev/urandom | tr -cd 'a-f0-9' | head -c 32 )
+    output=$( cat /dev/urandom | base64 | head -c 32 | sed 's/$/\n/' )
     yt-dlp $line --compat-options filename-sanitization -P "$path" --output "$output.%(ext)s" 2>&1 | tee -a log.txt
     res=$?
   else 
